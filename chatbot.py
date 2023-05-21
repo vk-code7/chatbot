@@ -1,6 +1,6 @@
 import speech_recognition as sr
 import pyttsx3
-import os
+import connection
 
 #pyaduio
 #pyttsx3
@@ -29,7 +29,7 @@ def Getquery():
             audio2 = r.listen(source)
             print('working...')
             # using google to recognize audio
-            query = r.recognize_assemblyai(audio_data = audio2, key = None, language = 'en-IN')
+            query = r.recognize_google(audio_data = audio2, key = None, language = 'en-IN')
             query = query.lower()
             return query
     except Exception as e:
@@ -42,5 +42,8 @@ def Getquery():
 
 while True :
     query = Getquery()
-    print("Did You Say " + query)
-    SpeakText(query)
+    response = connection.getResponse(query)
+    print("uese: "+query)
+    print("chatbot: "+ response)
+    SpeakText(response)
+connection.dataBase.close()
